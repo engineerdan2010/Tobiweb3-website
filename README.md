@@ -1,54 +1,74 @@
-# Tobiofweb3 — Hero / Landing Demo
+# tobiofweb3 — Hero Landing Page
 
-This is a small static demo for a bold Web3-style hero and landing page for `tobiofweb3`.
+A bold Web3-style hero landing page with newsletter signup and project showcase.
 
-Files:
-- `index.html` — the demo page (hero, about, projects, feed, CTA)
-- `tobiofweb3.css` — dark neon styles used by the page
-- `script.js` — a small mock feed renderer (replaceable with a live X/Twitter embed)
+## Files
 
-How to run:
-1. Open `index.html` in your browser (double-click or via local server).
+- `index.html` — Main landing page (hero, about, projects, CTA)
+- `tobiofweb3.css` — Dark neon theme with responsive layout
+- `script.js` — Newsletter form handler
+- `server.js` — Express backend serving static files + POST /subscribe
+- `web.jpg` — Avatar image
 
-Replace mock feed with live X/Twitter posts:
-- Option A (embed): Add X/Twitter embed code where `#feedGrid` is and remove `script.js` rendering.
-- Option B (API): Use X API or a server-side proxy to fetch posts and render them into `#feedGrid`.
+## Running the Server
 
-Styling notes & suggestions:
-- Uses `Orbitron` for hero headlines and `Inter` for body text.
-- Colors: neon gradients, dark backgrounds, glitch-like accents.
+1. Install dependencies:
 
-Next steps I can do for you:
-- Add real X/Twitter widget code or connect to the API.
-- Add wallet/ENS link integration and a small ENS lookup widget.
-- Generate alt avatars / pixel art with SVGs or animated background.
-
-Server (subscribe endpoint)
-----------------------------
-I added a simple Node.js server `server.js` exposing `POST /subscribe` which appends signups to `subscriptions.jsonl`.
-
-How to run the server locally:
-
-1. Open a terminal in the project folder:
-
-```powershell
-cd 'C:\Users\opopoola\Desktop\Tobiofweb3'
+```bash
 npm install
+```
+
+2. Start the server:
+
+```bash
 npm start
 ```
 
-2. Open the site at http://localhost:3000 if you serve `index.html` via a static server, or run the site with a static file server and the API together (the API runs on port 3000 by default).
+3. Open http://localhost:3000 in your browser.
 
-Notes on SMTP notifications (optional):
-- To enable email notifications when a user signs up, set these environment variables before starting the server:
+The server will serve all static files and handle newsletter signups.
 
-```powershell
-#$env:SMTP_HOST = 'smtp.example.com'; $env:SMTP_PORT = '587'; $env:SMTP_USER = 'user'; $env:SMTP_PASS = 'pass'; $env:OWNER_EMAIL = 'you@example.com'; npm start
+## Production Deployment
+
+Before uploading to production:
+
+- [ ] Update social links if needed (X, Telegram, project URLs)
+- [ ] Replace `web.jpg` with your actual avatar
+- [ ] Configure `SMTP_*` environment variables for email notifications (optional)
+- [ ] Set `PORT` environment variable if needed (defaults to 3000)
+
+### Email Notifications (Optional)
+
+To send email notifications when users sign up, set environment variables:
+
+```bash
+export SMTP_HOST=smtp.example.com
+export SMTP_PORT=587
+export SMTP_USER=your-email@example.com
+export SMTP_PASS=your-password
+export OWNER_EMAIL=notification@example.com
+npm start
 ```
 
-The server will attempt a best-effort notification if `SMTP_HOST` is present.
+Or on Windows PowerShell:
 
-Security & next steps:
-- This demo writes raw subscription lines to `subscriptions.jsonl` — for production, use a database and protect your endpoints.
-- Add rate-limiting, captcha, and server-side validation for production usage.
+```powershell
+$env:SMTP_HOST = 'smtp.example.com'; $env:SMTP_PORT = '587'; $env:SMTP_USER = 'user@example.com'; $env:SMTP_PASS = 'password'; $env:OWNER_EMAIL = 'you@example.com'; npm start
+```
+
+## Signups
+
+User signups are stored in `subscriptions.jsonl` (one JSON line per signup with email, timestamp, and IP).
+
+For production, migrate to a proper database and add rate-limiting.
+
+## Tech Stack
+
+- **Frontend**: HTML5, CSS3, Vanilla JS
+- **Backend**: Node.js, Express
+- **Email**: Nodemailer (optional SMTP)
+
+---
+
+© 2026 tobiofweb3 — Dominate then rule in web3
 

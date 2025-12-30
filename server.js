@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '.')));
 
 const SUBS_FILE = path.join(__dirname, 'subscriptions.jsonl');
 
@@ -66,4 +67,6 @@ app.post('/subscribe', async (req, res) => {
 
 app.get('/health', (req, res) => res.json({ ok:true, now: new Date().toISOString() }));
 
-app.listen(PORT, () => console.log(`Subscribe server listening on http://localhost:${PORT}`));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+
+app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
